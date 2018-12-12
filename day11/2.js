@@ -17,27 +17,26 @@ for(let i = 0; i < gridSize; i++) {
   grid.push(row)
 }
 
-const outerGrid = []
 let maxValue = 0
 let maxPos = []
 
 for(let i = 0; i < gridSize; i++) {
-  let row = []
   for(let j = 0; j < gridSize; j++) {
-    if (j === 0 || j === gridSize-1 || i === 0 || i === gridSize) {
-      row.push('#')
-    } else {
-      const value = grid[j][i] + grid[j][i+1] + grid[j][i-1] + grid[j+1][i] + grid[j-1][i]
-        + grid[j+1][i+1] + grid[j-1][i-1] + grid[j-1][i+1] + grid[j+1][i-1]
-      row.push(value)
+    for(let squareSize = 1; squareSize < (gridSize - i); squareSize++) {
+      let value = 0
+      for(let x = i; x < i + squareSize; x++) {
+        for(let y = j; y < j + squareSize; y++) {
+          value += grid[x][y];
+        }
+      }
 
       if (value > maxValue) {
         maxValue = value
-        maxPos = [i, j, value]
+        maxPos = [j+1, x+1, squareSize]
+        console.log(maxPos);
       }
     }
   }
-  outerGrid.push(row)
 }
 
 console.log(maxPos)
